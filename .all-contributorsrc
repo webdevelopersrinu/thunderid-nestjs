@@ -1,0 +1,13 @@
+{
+  "projectName": "thunderid-nestjs",
+  "projectOwner": "webdevelopersrinu",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": ["README.md"],
+  "imageSize": 80,
+  "commit": false,
+  "commitConvention": "none",
+  "contributors": [],
+  "contributorsPerLine": 7,
+  "skipCi": true
+}

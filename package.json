@@ -1,0 +1,81 @@
+{
+  "name": "thunderid-nestjs",
+  "version": "0.1.0",
+  "description": "NestJS SDK for ThunderID (community-maintained)",
+  "keywords": [
+    "thunderid",
+    "nestjs",
+    "server"
+  ],
+  "homepage": "https://github.com/webdevelopersrinu/thunderid-nestjs#readme",
+  "bugs": {
+    "url": "https://github.com/webdevelopersrinu/thunderid-nestjs/issues"
+  },
+  "author": "srinu desetti",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "commonjs": "dist/cjs/index.cjs",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdevelopersrinu/thunderid-nestjs"
+  },
+  "scripts": {
+    "build": "npm run clean:dist &&  rolldown -c rolldown.config.js && tsc -p tsconfig.lib.json --emitDeclarationOnly --outDir dist",
+    "clean": "npm run clean:node_modules && npm run clean:dist",
+    "clean:dist": "rimraf dist",
+    "clean:node_modules": "rimraf node_modules",
+    "format:check": "prettier --check --cache .",
+    "format:fix": "prettier --write --cache .",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.cjs,.mjs",
+    "lint:fix": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.cjs,.mjs",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc -p tsconfig.lib.json",
+    "changeset": "changeset",
+    "release": "npm run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
+    "@nestjs/common": "^11.0.0",
+    "@thunderid/eslint-plugin": "0.0.2",
+    "@thunderid/prettier-config": "0.0.2",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.6",
+    "@types/node": "22.15.3",
+    "eslint": "9.39.4",
+    "prettier": "3.6.2",
+    "reflect-metadata": "^0.2.2",
+    "rimraf": "6.1.3",
+    "rolldown": "1.0.0-beta.45",
+    "rxjs": "^7.8.1",
+    "typescript": "5.9.3",
+    "vitest": "4.1.8"
+  },
+  "dependencies": {
+    "@thunderid/express": "^0.2.5"
+  },
+  "peerDependencies": {
+    "@nestjs/common": ">=10.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.12"
+  }
+}
