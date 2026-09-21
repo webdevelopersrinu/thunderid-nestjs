@@ -46,7 +46,7 @@
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc -p tsconfig.lib.json",
     "changeset": "changeset",
-    "release": "npm run build && changeset publish"
+    "version": "changeset version"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",

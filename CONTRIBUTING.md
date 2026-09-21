@@ -34,19 +34,22 @@ npm test
 
 - **CI** (`.github/workflows/ci.yml`) runs lint, typecheck, build, and
   tests on every push and PR.
-- **Release** (`.github/workflows/publish.yml`) runs on every push to
-  `main`. If there's a pending changeset, a bot opens (or updates) a
-  "Version Packages" PR — that PR IS the changelog for the next
-  release, open for anyone to read before it ships.
-- Merging that PR publishes the new version to npm and writes
-  `CHANGELOG.md`. Nobody runs `npm publish` by hand.
+- **Publish** (`.github/workflows/publish.yml`) runs only when a
+  maintainer publishes a GitHub Release. It builds, tests, then runs
+  `npm publish`. Nobody runs `npm publish` by hand.
 - Contributor avatars in the README update via the all-contributors
   bot — comment `@all-contributors please add @<username> for code`
   on your merged PR.
 
-## What's manual
+## What's manual (maintainer does this to cut a release)
 
-- Writing the code and the changeset.
-- Reviewing PRs.
-- Deciding what's a patch vs minor vs major (the changeset prompt
-  asks you, use your judgment).
+1. Make sure every merged PR since the last release added a
+   changeset (`npx changeset`).
+2. On `main`, run `npx changeset version`. This bumps the version in
+   `package.json` and writes `CHANGELOG.md` from the changesets.
+3. Commit that (`git commit -am "release vX.Y.Z"`) and push to `main`.
+4. On GitHub: **Releases → Draft a new release**, tag it `vX.Y.Z`,
+   title it `vX.Y.Z`, paste the new CHANGELOG.md section as the
+   description, click **Publish release**.
+5. Publishing the release triggers the `Publish` workflow, which
+   builds, tests, and pushes the version to npm.

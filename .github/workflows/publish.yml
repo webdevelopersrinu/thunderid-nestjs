@@ -1,26 +1,17 @@
-name: Release
+name: Publish to npm
 
-# On every push to main: if there are pending changesets, open (or update) a
-# "Version Packages" PR with the changelog + version bump. When that PR gets
-# merged, this runs again and publishes the new version to npm.
+# Runs when you publish a GitHub Release (create a tag + click "Publish release").
+# Builds, tests, then publishes to npm using the NPM_TOKEN secret.
 on:
-  push:
-    branches: [main]
-
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+  release:
+    types: [published]
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -37,13 +28,10 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Test
-        run: npm test
+      - name: Build and test
+        run: npm run build && npm test
 
-      - name: Create release PR or publish
-        uses: changesets/action@v1
-        with:
-          publish: npm run release
+      - name: Publish to npm
+        run: npm publish --access public
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
